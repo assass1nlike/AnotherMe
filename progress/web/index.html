@@ -1,0 +1,65 @@
+<!doctype html>
+<html lang="zh-CN">
+<head>
+<meta charset="utf-8">
+<title>日期进度</title>
+<link rel="stylesheet" href="/style.css">
+</head>
+<body>
+<nav class="rail" aria-label="项目">
+  <p class="rail-title">项目</p>
+  <ul id="docs"></ul>
+  <p class="root" id="root"></p>
+</nav>
+
+<main class="desk">
+  <header class="head">
+    <h1 id="title"></h1>
+    <div class="pen" id="pen">
+      <span class="pen-dot" id="penDot"></span>
+      <span class="pen-label">用这天的墨写</span>
+      <button class="step" id="prev" aria-label="前一天">‹</button>
+      <label class="pen-date">
+        <span id="penText"></span>
+        <input type="date" id="penInput" aria-label="编辑日期">
+      </label>
+      <button class="step" id="next" aria-label="后一天">›</button>
+      <button class="today" id="today">今天</button>
+    </div>
+    <p class="saved" id="saved"></p>
+  </header>
+
+  <div class="notice" id="notice" hidden></div>
+
+  <div class="sheet-wrap">
+    <div class="sheet" id="sheet">
+      <div class="page" id="page">
+        <div class="ink" id="ink" aria-hidden="true"></div>
+        <textarea id="editor" spellcheck="false" autocomplete="off"></textarea>
+      </div>
+    </div>
+    <div class="map" id="map" title="整份文档里各天的墨迹，点击跳转"><div class="view" id="view"></div></div>
+  </div>
+
+  <div class="selbar" id="selbar" hidden>
+    <span id="selInfo"></span>
+    <button id="selMark"></button>
+    <button class="quiet" id="selClear">清除日期</button>
+  </div>
+</main>
+
+<aside class="days" aria-label="各日期的墨迹">
+  <p class="days-title">墨迹</p>
+  <p class="days-hint">单击跳到这天写的下一处，双击换成这天的墨</p>
+  <ul id="days"></ul>
+</aside>
+
+<div class="tip" id="tip" hidden></div>
+<div class="menu" id="menu" hidden>
+  <button id="menuMark"></button>
+  <button id="menuClear">清除选中文字的日期</button>
+</div>
+
+<script src="/app.js"></script>
+</body>
+</html>

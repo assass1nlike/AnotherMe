@@ -1,0 +1,54 @@
+:root {
+  --paper: #22252d;
+  --line: #30343e;
+  --text: #e6e1d6;
+  --muted: #8a8780;
+  --faint: #5d5d5f;
+  --accent: oklch(0.80 0.10 75);   /* 第一条的标记色，和日期进度的暖色墨一致 */
+  color-scheme: dark;
+}
+* { box-sizing: border-box; }
+html, body { margin: 0; background: var(--paper); color: var(--text); overflow: hidden; }
+body { font: 400 14px/1.6 "Noto Sans SC", "Microsoft YaHei UI", sans-serif; user-select: none; }
+button { font: inherit; color: inherit; background: none; border: 0; padding: 0; cursor: pointer; }
+button:focus-visible { outline: 1.5px solid var(--accent); outline-offset: 1px; border-radius: 4px; }
+ul { list-style: none; margin: 0; padding: 0; }
+
+/* 边框画在窗口上，面板本身只和内容一样高，用来算窗口该多高 */
+html { box-shadow: inset 0 0 0 1px #393e49; height: 100%; }
+.panel { display: flex; flex-direction: column; max-height: 100vh; }
+.panel > * { flex-shrink: 0; }
+
+header { display: flex; align-items: center; gap: 8px; padding: 10px 10px 8px 16px; cursor: move; }
+h1 { margin: 0; font: 600 14px/1 "Noto Serif SC", serif; letter-spacing: .08em; }
+.count { color: var(--faint); font-size: 12px; font-variant-numeric: tabular-nums; }
+.fold { margin-left: auto; width: 26px; height: 26px; border-radius: 6px; color: var(--muted); display: grid; place-items: center; }
+.fold:hover { background: rgba(255,255,255,.07); color: var(--text); }
+
+#list { overflow-y: auto; flex-shrink: 1; min-height: 0; scrollbar-width: thin; scrollbar-color: var(--line) transparent; }
+#list li { position: relative; display: grid; grid-template-columns: 16px 1fr 22px; align-items: start; padding: 0 6px 0 4px; }
+#list li + li .text { border-top: 1px solid var(--line); }
+.grip { height: 100%; cursor: grab; display: grid; place-items: center; color: transparent; font-size: 11px; letter-spacing: -2px; }
+#list li:hover .grip { color: var(--faint); }
+.del { margin-top: 9px; width: 20px; height: 20px; border-radius: 5px; color: transparent; font-size: 15px; line-height: 1; }
+#list li:hover .del, .del:focus-visible { color: var(--faint); }
+.del:hover { color: var(--text) !important; background: rgba(255,255,255,.07); }
+
+textarea {
+  display: block; width: 100%; resize: none; overflow: hidden; border: 0; outline: none; background: transparent;
+  color: inherit; font: inherit; line-height: 1.6; padding: 7px 4px 7px 6px; margin: 0; user-select: text;
+}
+#list textarea:focus { background: rgba(255,255,255,.035); border-radius: 5px; }
+/* 第一条是眼下最要紧的事，左边一道暖色 */
+#list li:first-child::before { content: ""; position: absolute; left: 4px; top: 10px; bottom: 10px; width: 2px; border-radius: 1px; background: var(--accent); }
+#list li.dragging { opacity: .35; }
+#list li.drop-before .text { box-shadow: inset 0 2px 0 var(--accent); }
+#list li.drop-after .text { box-shadow: inset 0 -2px 0 var(--accent); }
+
+.new { display: grid; grid-template-columns: 16px 1fr; align-items: start; padding: 2px 28px 2px 4px; border-top: 1px solid var(--line); }
+.plus { color: var(--faint); text-align: center; padding-top: 7px; }
+#newItem::placeholder { color: var(--faint); }
+
+.hint { margin: 0; padding: 4px 16px 10px; color: var(--faint); font-size: 11.5px; }
+
+@media (prefers-reduced-motion: reduce) { * { transition: none !important; } }

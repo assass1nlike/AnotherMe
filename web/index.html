@@ -1,0 +1,109 @@
+<!doctype html>
+<html lang="zh-CN">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>AnotherMe</title>
+<link rel="stylesheet" href="/static/style.css">
+</head>
+<body>
+<header class="top">
+  <div class="date">
+    <h1 id="date"></h1>
+    <p id="daymeta"></p>
+  </div>
+  <div class="actions">
+    <select id="model" aria-label="模型"></select>
+    <button id="startBtn" class="ghost">开工</button>
+    <button id="endBtn" class="ghost">收工</button>
+  </div>
+</header>
+
+<section class="thread" aria-label="今天的工作线">
+  <div class="track" id="track"></div>
+  <div class="axis" id="axis"></div>
+  <div class="tip" id="tip" hidden></div>
+</section>
+
+<main class="grid">
+  <aside class="left">
+    <section class="now" id="now"></section>
+
+    <section class="block">
+      <div class="head"><h2>今日计划</h2><button class="link" id="addTaskBtn">新建任务</button></div>
+      <ul class="plan" id="plan"></ul>
+      <form class="newtask" id="newTask" hidden>
+        <input name="title" placeholder="任务" required>
+        <input name="project" placeholder="项目" list="projectList">
+        <input name="done_when" placeholder="做到什么程度算完成">
+        <div class="row">
+          <input name="estimate_min" type="number" min="0" step="15" placeholder="估时（分钟）">
+          <label class="check"><input name="plan" type="checkbox" checked>加入今日计划</label>
+        </div>
+        <div class="row end"><button type="button" class="ghost" id="cancelTask">取消</button><button>新建</button></div>
+      </form>
+      <datalist id="projectList"></datalist>
+    </section>
+
+    <section class="block">
+      <div class="head"><h2>收件箱</h2><span class="count" id="inboxCount"></span></div>
+      <form id="inboxForm"><input id="inboxInput" placeholder="冒出来的想法，回车记下"></form>
+      <ul class="inbox" id="inbox"></ul>
+    </section>
+  </aside>
+
+  <section class="chat">
+    <div class="log" id="log"></div>
+    <form class="composer" id="composer">
+      <textarea id="input" rows="2" placeholder="说点什么，比如“换了，A 停在调完 lr，下一步跑 seed 2，有点烦了”"></textarea>
+      <button id="send">发送</button>
+    </form>
+  </section>
+
+  <aside class="right">
+    <div class="head"><h2>服务器</h2><button class="link" id="refreshServers">刷新</button></div>
+    <div id="servers"></div>
+    <div class="head"><h2>项目</h2><button class="link" id="addProjectBtn">添加项目</button></div>
+    <form class="newtask" id="newProject" hidden>
+      <input name="name" placeholder="项目名" required>
+      <select name="server" id="serverSelect"></select>
+      <input name="path" placeholder="服务器上的路径，如 /data2/me/proj" required>
+      <div class="row end"><button type="button" class="ghost" id="cancelProject">取消</button><button>添加并建档</button></div>
+    </form>
+    <ul class="projects" id="projects"></ul>
+  </aside>
+</main>
+
+<dialog id="dossierDlg" class="wide">
+  <div class="dhead">
+    <div><h3 id="dossierTitle"></h3><p class="count" id="dossierMeta"></p></div>
+    <div class="row">
+      <button class="ghost" id="dossierRebuild" title="丢掉增量，重新通读说明文档、提交历史和整份 exps.md">重新通读</button>
+      <button class="ghost" id="dossierEdit">编辑</button>
+      <button id="dossierClose">关闭</button>
+    </div>
+  </div>
+  <div class="dossier msg assistant" id="dossierView"></div>
+  <textarea id="dossierText" hidden></textarea>
+</dialog>
+
+<dialog id="switchDlg">
+  <form id="switchForm" method="dialog">
+    <h3 id="switchTitle">切换</h3>
+    <label>切到
+      <select name="to_task" id="switchTarget"></select>
+    </label>
+    <label>停在哪<input name="stop_at" placeholder="当前任务做到哪一步"></label>
+    <label>下一步<input name="next_step" placeholder="回来后第一个具体动作"></label>
+    <fieldset class="reasons" id="reasons"><legend>为什么换</legend></fieldset>
+    <label>原话（可不填）<input name="reason_text"></label>
+    <div class="row end">
+      <button type="button" class="ghost" id="cancelSwitch">取消</button>
+      <button id="confirmSwitch">切换</button>
+    </div>
+  </form>
+</dialog>
+
+<script src="/static/app.js"></script>
+</body>
+</html>
